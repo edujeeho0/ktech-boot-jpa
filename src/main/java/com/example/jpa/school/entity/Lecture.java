@@ -1,6 +1,7 @@
 package com.example.jpa.school.entity;
 
 import com.example.jpa.entity.BaseEntity;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import lombok.*;
@@ -20,6 +21,6 @@ public class Lecture extends BaseEntity {
     private Integer startTime;
     private Integer endTime;
 
-    @ManyToMany(mappedBy = "lectures")
+    @ManyToMany(mappedBy = "lectures", cascade = CascadeType.ALL)
     private final List<Student> students = new ArrayList<>();
 }
