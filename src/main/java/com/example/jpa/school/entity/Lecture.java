@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -20,5 +21,5 @@ public class Lecture extends BaseEntity {
     private Integer endTime;
 
     @ManyToMany(mappedBy = "lectures")
-    private List<Student> students;
+    private final List<Student> students = new ArrayList<>();
 }

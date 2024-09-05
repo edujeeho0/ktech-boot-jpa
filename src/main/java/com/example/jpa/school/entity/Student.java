@@ -8,6 +8,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -26,5 +27,5 @@ public class Student extends BaseEntity {
             joinColumns = @JoinColumn(name = "student_id"),
             inverseJoinColumns = @JoinColumn(name = "lecture_id")
     )
-    private List<Lecture> lectures;
+    private final List<Lecture> lectures = new ArrayList<>();
 }
