@@ -20,11 +20,11 @@ public class Student extends BaseEntity {
     private String phone;
     private String email;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "advisor_id")
     private Instructor advisor;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "attending_lectures",
             joinColumns = @JoinColumn(name = "student_id"),

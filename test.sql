@@ -43,3 +43,12 @@ WHERE id = 1;
 COMMIT;
 -- TRANSACTION에서 있었던 작업을 없덜일로 한다.
 ROLLBACK;
+
+
+-- 학생 정보만 필요할수도 있고
+SELECT * FROM student;
+
+-- 연관된 정보도 같이 필요할 수 있다.
+SELECT s.name as student, i.name as advisor
+FROM student s LEFT OUTER JOIN instructor i
+    ON s.advisor_id = i.id;

@@ -159,4 +159,22 @@ public class SchoolController {
 
         return "done";
     }
+
+    @GetMapping("test/n-plus-one")
+    public String nPlusOne() {
+//        log.info("findAll 하면 실행되는 SQL 갯수는?");
+//        for(Student student : studentRepository.findAll()) {
+//            if (student.getAdvisor() != null) student.getAdvisor().getId();
+//        }
+//
+//        log.info("instructor도 해보자.");
+//        instructorRepository.findAll();
+
+        List<Student> students = studentRepository.findAllJoinAdvisor();
+        for (Student student : students) {
+            log.info("{}", student.getAdvisor());
+        }
+
+        return "done";
+    }
 }
