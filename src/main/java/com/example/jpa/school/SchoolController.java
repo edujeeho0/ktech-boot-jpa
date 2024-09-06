@@ -5,10 +5,14 @@ import com.example.jpa.school.entity.Student;
 import com.example.jpa.school.repo.LectureRepository;
 import com.example.jpa.school.repo.StudentRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
+@Slf4j
 @RestController
 @RequestMapping("school")
 @RequiredArgsConstructor
@@ -54,6 +58,54 @@ public class SchoolController {
         // 5. alex와 spring boot를 각각 저장해본다.
         studentRepository.save(alex);
         lectureRepository.save(boot);
+
+        return "done";
+    }
+
+    @GetMapping("test/query")
+    public String testQuery() {
+        List<Lecture> lectures = lectureRepository
+                .findLecturesBeforeLunch();
+        for (Lecture lecture : lectures) {
+            log.info("{}: {}", lecture.getName(), lecture.getStartTime());
+        }
+
+        lectures = lectureRepository.findLecturesByTime(12, 15);
+        for (Lecture lecture : lectures) {
+            log.info(
+                    "{}: {} - {}",
+                    lecture.getName(),
+                    lecture.getStartTime(),
+                    lecture.getEndTime()
+            );
+        }
+
+        lectures = lectureRepository.findLecturesByTimeNative(12, 15);
+        for (Lecture lecture : lectures) {
+            log.info(
+                    "{}: {} - {}",
+                    lecture.getName(),
+                    lecture.getStartTime(),
+                    lecture.getEndTime()
+            );
+        }
+
+        lectures = lectureRepository.findLecturesByTimeNamed(11, 14);
+        for (Lecture lecture : lectures) {
+            log.info(
+                    "{}: {} - {}",
+                    lecture.getName(),
+                    lecture.getStartTime(),
+                    lecture.getEndTime()
+            );
+        }
+
+        lectures = lectureRepository.findLecturesByDay(List.of("mon", "wed", "fri"));
+        for (Lecture lecture : lectures) {
+            log.info(
+                    "{}: {}", lecture.getName(), lecture.getDay()
+            );
+        }
 
         return "done";
     }
