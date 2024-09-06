@@ -1,5 +1,8 @@
 package com.example.jpa.school;
 
+import com.example.jpa.school.dto.ILCountDto;
+import com.example.jpa.school.dto.ILCountProjection;
+import com.example.jpa.school.entity.Instructor;
 import com.example.jpa.school.entity.Lecture;
 import com.example.jpa.school.entity.Student;
 import com.example.jpa.school.repo.InstructorRepository;
@@ -131,6 +134,29 @@ public class SchoolController {
     @GetMapping("test/modifying")
     public String testModifying() {
         log.info(instructorRepository.sackInstructorNotAdvising().toString());
+        return "done";
+    }
+
+    @GetMapping("test/aggregate")
+    public String testAggregate() {
+        List<Object[]> resultObj = instructorRepository.selectILCountObject();
+        for (Object[] row : resultObj) {
+            log.info("instructor: {}", ((Instructor) row[0]).getName());
+            log.info("lecture count: {}", row[1]);
+        }
+
+        List<ILCountDto> resultDto = instructorRepository.selectILCountDto();
+        for (ILCountDto row : resultDto) {
+            log.info("instructor: {}", row.getInstructor().getName());
+            log.info("lecture count: {}", row.getCount());
+        }
+
+        List<ILCountProjection> resultProj = instructorRepository.selectILCountProj();
+        for (ILCountProjection row : resultProj) {
+            log.info("instructor: {}", row.getInstructor().getName());
+            log.info("lecture count: {}", row.getLectureCount());
+        }
+
         return "done";
     }
 }
