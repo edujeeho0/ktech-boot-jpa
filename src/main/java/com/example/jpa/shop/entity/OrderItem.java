@@ -16,4 +16,6 @@ public class OrderItem extends BaseEntity {
     private Order order;
     @ManyToOne
     private Item item;
+
+    private Integer count;
 }
