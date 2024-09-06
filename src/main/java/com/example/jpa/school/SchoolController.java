@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -121,6 +122,13 @@ public class SchoolController {
         );
         log.info(String.valueOf(lecturePage.getContent().size()));
 
+        return "done";
+    }
+
+    @Transactional
+    @GetMapping("test/modifying")
+    public String testModifying() {
+        log.info(lectureRepository.sackInstructorNotAdvising().toString());
         return "done";
     }
 }
