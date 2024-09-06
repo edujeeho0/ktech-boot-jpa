@@ -6,6 +6,8 @@ import com.example.jpa.school.repo.LectureRepository;
 import com.example.jpa.school.repo.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -106,6 +108,18 @@ public class SchoolController {
                     "{}: {}", lecture.getName(), lecture.getDay()
             );
         }
+
+        Page<Lecture> lecturePage = lectureRepository.findLecturesStartsBefore(
+                14,
+                PageRequest.of(0, 3)
+        );
+        log.info(lecturePage.getContent().toString());
+
+        lecturePage = lectureRepository.findLecturesEndBeforeNative(
+                17,
+                PageRequest.of(0, 3)
+        );
+        log.info(String.valueOf(lecturePage.getContent().size()));
 
         return "done";
     }

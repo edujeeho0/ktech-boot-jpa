@@ -1,6 +1,8 @@
 package com.example.jpa.school.repo;
 
 import com.example.jpa.school.entity.Lecture;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -53,5 +55,22 @@ public interface LectureRepository extends JpaRepository<Lecture, Long> {
     @Query("SELECT l FROM Lecture l WHERE l.day IN :days")
     List<Lecture> findLecturesByDay(
             @Param("days") Collection<String> days
+    );
+
+    // Pagination
+    @Query("SELECT l FROM Lecture l WHERE l.startTime < :start")
+    Page<Lecture> findLecturesStartsBefore(
+            @Param("start") Integer startTime,
+            Pageable pageable
+    );
+
+    @Query(
+            value = "SELECT * FROM lecture WHERE end_time < :end",
+            countQuery = "SELECT COUNT(*) FROM lecture WHERE end_time < :end",
+            nativeQuery = true
+    )
+    Page<Lecture> findLecturesEndBeforeNative(
+            @Param("end") Integer endTime,
+            Pageable pageable
     );
 }
