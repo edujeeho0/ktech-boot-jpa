@@ -17,16 +17,14 @@ public class SchoolController {
     private final LectureRepository lectureRepository;
 
     @GetMapping("test/many-to-many")
-    public String test() {
+    public String testMtoN() {
         // 1. 두명의 학생 (alex, brad)를 만든다.
         Student alex = Student.builder()
-                .firstName("alex")
-                .lastName("rod")
+                .name("alex")
                 .build();
         alex = studentRepository.save(alex);
         Student brad = Student.builder()
-                .firstName("brad")
-                .lastName("ford")
+                .name("brad")
                 .build();
         brad = studentRepository.save(brad);
 

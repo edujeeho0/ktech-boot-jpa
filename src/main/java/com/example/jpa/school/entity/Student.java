@@ -2,10 +2,7 @@ package com.example.jpa.school.entity;
 
 
 import com.example.jpa.entity.BaseEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -18,8 +15,14 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Student extends BaseEntity {
-    private String firstName;
-    private String lastName;
+    private String name;
+    private Integer age;
+    private String phone;
+    private String email;
+
+    @ManyToOne
+    @JoinColumn(name = "advisor_id")
+    private Instructor advisor;
 
     @ManyToMany
     @JoinTable(

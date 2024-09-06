@@ -1,9 +1,7 @@
 package com.example.jpa.school.entity;
 
 import com.example.jpa.entity.BaseEntity;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -20,6 +18,10 @@ public class Lecture extends BaseEntity {
     private String day;
     private Integer startTime;
     private Integer endTime;
+
+    @ManyToOne
+    @JoinColumn(name = "instructor_id")
+    private Instructor instructor;
 
     @ManyToMany(mappedBy = "lectures", cascade = CascadeType.ALL)
     private final List<Student> students = new ArrayList<>();
