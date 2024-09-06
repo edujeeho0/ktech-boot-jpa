@@ -20,4 +20,8 @@ public class Instructor extends BaseEntity {
     @OneToMany(mappedBy = "advisor")
     private final List<Student> advisingStudents
             = new ArrayList<>();
+
+    @OneToMany(mappedBy = "instructor")
+    private final List<Lecture> lectures
+            = new ArrayList<>();
 }

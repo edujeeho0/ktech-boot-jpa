@@ -2,6 +2,7 @@ package com.example.jpa.school;
 
 import com.example.jpa.school.entity.Lecture;
 import com.example.jpa.school.entity.Student;
+import com.example.jpa.school.repo.InstructorRepository;
 import com.example.jpa.school.repo.LectureRepository;
 import com.example.jpa.school.repo.StudentRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ import java.util.List;
 public class SchoolController {
     private final StudentRepository studentRepository;
     private final LectureRepository lectureRepository;
+    private final InstructorRepository instructorRepository;
 
     @GetMapping("test/many-to-many")
     public String testMtoN() {
@@ -128,7 +130,7 @@ public class SchoolController {
     @Transactional
     @GetMapping("test/modifying")
     public String testModifying() {
-        log.info(lectureRepository.sackInstructorNotAdvising().toString());
+        log.info(instructorRepository.sackInstructorNotAdvising().toString());
         return "done";
     }
 }

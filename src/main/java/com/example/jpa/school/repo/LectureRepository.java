@@ -74,12 +74,4 @@ public interface LectureRepository extends JpaRepository<Lecture, Long> {
             @Param("end") Integer endTime,
             Pageable pageable
     );
-
-    // 데이터의 변경이 일어날 수 있는 Query의 경우
-    // Modifying을 추가해야 한다.
-    @Modifying
-    @Query("DELETE FROM Instructor i " +
-            "WHERE size(i.advisingStudents) = 0")
-    // 반환되는 Integer는 영향받은 줄의 갯수
-    Integer sackInstructorNotAdvising();
 }
