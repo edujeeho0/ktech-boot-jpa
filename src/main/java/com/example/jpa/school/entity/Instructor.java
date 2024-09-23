@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.List;
 public class Instructor extends BaseEntity {
     private String name;
 
+    @BatchSize(size = 5)
     @OneToMany(mappedBy = "advisor", fetch = FetchType.LAZY)
     private final List<Student> advisingStudents
             = new ArrayList<>();
@@ -26,10 +28,3 @@ public class Instructor extends BaseEntity {
     private final List<Lecture> lectures
             = new ArrayList<>();
 }
-/*
-SELECT *
-FROM instructor i JOIN student s ON i.id = s.advisor_id;
- */
-
-
-

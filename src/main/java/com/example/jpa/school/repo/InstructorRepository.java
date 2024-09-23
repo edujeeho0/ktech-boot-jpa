@@ -3,6 +3,8 @@ package com.example.jpa.school.repo;
 import com.example.jpa.school.dto.ILCountDto;
 import com.example.jpa.school.dto.ILCountProjection;
 import com.example.jpa.school.entity.Instructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -56,6 +58,12 @@ public interface InstructorRepository extends JpaRepository<Instructor, Long> {
     )
     @Query("SELECT DISTINCT i FROM Instructor i")
     List<Instructor> findWithStudentAndLecture();
+
+    @Query("SELECT DISTINCT i FROM Instructor i LEFT JOIN FETCH i.advisingStudents")
+    List<Instructor> findByFetch();
+
+    @Query("SELECT DISTINCT i FROM Instructor i LEFT JOIN FETCH i.advisingStudents")
+    Page<Instructor> findByFetchPage(Pageable pageable);
 }
 
 

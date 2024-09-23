@@ -198,4 +198,20 @@ public class SchoolController {
         return "done";
     }
 
+    @GetMapping("test/fetch-page")
+    public String fetchPage() {
+//        List<Instructor> instructors = instructorRepository.findByFetch();
+//        for (Instructor instructor: instructors) {
+//            log.info("{}", instructor.getAdvisingStudents().size());
+//        }
+        Page<Instructor> instructorPage = instructorRepository
+//                .findByFetchPage(PageRequest.of(0, 10));
+                .findAll(PageRequest.of(0, 10));
+        List<Instructor> instructors = instructorPage.getContent();
+        for (Instructor instructor: instructors) {
+            log.info("{}", instructor.getAdvisingStudents().size());
+        }
+
+        return "done";
+    }
 }
