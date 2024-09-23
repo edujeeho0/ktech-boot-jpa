@@ -27,7 +27,7 @@ public class ShopService {
         this.itemId = this.itemRepo.save(Item.builder()
                 .name("mouse")
                 .price(10000)
-                .stock(25)
+                .stock(115)
                 .build()).getId();
     }
 
@@ -62,4 +62,20 @@ public class ShopService {
         if (item.getStock() < 0)
             throw new IllegalStateException();
     }
+
+    @Transactional
+    public void decreaseStockOpt() {
+        Item item = itemRepo.findById(itemId)
+                .orElseThrow();
+        item.setStock(item.getStock() - 10);
+        itemRepo.save(item);
+    }
+
+    @Transactional
+    public void checkItems() {
+        Item item = itemRepo.findById(itemId)
+                .orElseThrow();
+        log.info(item.getStock().toString());
+    }
+
 }
