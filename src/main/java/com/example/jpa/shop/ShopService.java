@@ -72,6 +72,22 @@ public class ShopService {
     }
 
     @Transactional
+    public void decreaseStockShare() {
+        Item item = itemRepo.findItemForShare(itemId)
+                .orElseThrow();
+        item.setStock(item.getStock() - 10);
+        itemRepo.save(item);
+    }
+
+    @Transactional
+    public void decreaseStockUpdate() {
+        Item item = itemRepo.findItemForUpdate(itemId)
+                .orElseThrow();
+        item.setStock(item.getStock() - 10);
+        itemRepo.save(item);
+    }
+
+    @Transactional
     public void checkItems() {
         Item item = itemRepo.findById(itemId)
                 .orElseThrow();

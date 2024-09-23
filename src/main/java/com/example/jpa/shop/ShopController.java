@@ -44,4 +44,26 @@ public class ShopController {
 
         return "done";
     }
+
+    @GetMapping("pes-lock-1")
+    public String pesLock() {
+        ExecutorService executorService
+                = Executors.newFixedThreadPool(10);
+        List<Future<?>> futures = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            futures.add(executorService.submit(
+                    () -> service.decreaseStockShare()
+            ));
+        }
+
+        for (int i = 0; i < 10; i++) {
+            try {
+                futures.get(i).get();
+            } catch (ExecutionException | InterruptedException ignored) {}
+        }
+
+        service.checkItems();
+
+        return "done";
+    }
 }
