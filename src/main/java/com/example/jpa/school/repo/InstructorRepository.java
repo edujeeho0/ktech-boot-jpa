@@ -3,6 +3,7 @@ package com.example.jpa.school.repo;
 import com.example.jpa.school.dto.ILCountDto;
 import com.example.jpa.school.dto.ILCountProjection;
 import com.example.jpa.school.entity.Instructor;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -39,4 +40,28 @@ public interface InstructorRepository extends JpaRepository<Instructor, Long> {
             "FROM Lecture l " +
             "GROUP BY l.instructor")
     List<ILCountProjection> selectILCountProj();
+
+
+    @EntityGraph(attributePaths = {"advisingStudents"}, type = EntityGraph.EntityGraphType.FETCH)
+    @Query("SELECT DISTINCT i FROM Instructor i")
+    List<Instructor> findByEntityGraph();
+
+    // Multi-Bag Fetch (문제)
+    @EntityGraph(
+            attributePaths = {
+                    "advisingStudents",
+                    "lectures"
+            },
+            type = EntityGraph.EntityGraphType.FETCH
+    )
+    @Query("SELECT DISTINCT i FROM Instructor i")
+    List<Instructor> findWithStudentAndLecture();
 }
+
+
+
+
+
+
+
+

@@ -26,3 +26,10 @@ public class Instructor extends BaseEntity {
     private final List<Lecture> lectures
             = new ArrayList<>();
 }
+/*
+SELECT *
+FROM instructor i JOIN student s ON i.id = s.advisor_id;
+ */
+
+
+

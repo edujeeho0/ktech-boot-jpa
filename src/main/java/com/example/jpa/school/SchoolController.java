@@ -177,4 +177,25 @@ public class SchoolController {
 
         return "done";
     }
+
+    @GetMapping("test/entity-graph")
+    public String entityGraph() {
+        List<Instructor> instructors = instructorRepository.findByEntityGraph();
+        for (Instructor instructor: instructors) {
+            log.info("{}", instructor.getAdvisingStudents().size());
+        }
+        return "done";
+    }
+
+    @GetMapping("test/multi-bag")
+    public String multiBag() {
+        List<Instructor> instructors = instructorRepository.findWithStudentAndLecture();
+        for (Instructor instructor: instructors) {
+            log.info("{}, {}",
+                    instructor.getAdvisingStudents().size(),
+                    instructor.getLectures().size());
+        }
+        return "done";
+    }
+
 }
